@@ -15,9 +15,10 @@
 
     //Si tout OK, on continue
 
+    //Reponse contient les données de la bdd
     $reponse = $bdd->query('SELECT * FROM jeux_video');
 
-    //On affiche chaque entrée une à une
+    //On affiche chaque entrée une à une à chaque fois qu'on fait une boucle
     while ($donnees = $reponse->fetch()) {
 
 ?>
