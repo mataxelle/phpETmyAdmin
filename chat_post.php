@@ -13,7 +13,10 @@
 
     $req = $bdd->prepare('INSERT INTO minichat (pseudo, messages) VALUES (?, ?)');
 
-    $req->execute(array($_POST['pseudo'], $_POST['messages']));
+    $req->execute(array(
+        $_POST['pseudo'], 
+        $_POST['messages']
+    ));
 
     header('Location: chat.php');
 ?>
