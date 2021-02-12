@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire de jeux vidéo</title>
+    <title>Formulaire d'ajout de jeux vidéo</title>
 </head>
 <body>
 
-    <h1>Formulaire jeux vidéo</h1>
+    <h1>Formulaire d'ajout de jeux vidéo</h1>
 
-    <form method="POST" action="jeux_video.php">
+    <form method="POST" action="jeux_video_post.php">
         <p>
             <label for="nom">Nom du jeu :
                 <input type="text" name="nom" id="nom" required>
@@ -32,12 +32,12 @@
         </p>
         <p>
             <label for="nbre_joueurs_max">Nombre de joueur :
-                <input type="number" name="nbre_Joueurs_max" id="nbre_joueurs_max" required>
+                <input type="number" name="nbre_joueurs_max" id="nbre_joueurs_max" required>
             </label>
         </p>
         <p>
             <label for="commentaires">Commentaire :
-                <input type="text" name="commentaires" required>
+                <input type="text" name="commentaires" id="commentaires" required>
             </label>
         </p>
         <p>
@@ -55,25 +55,30 @@
     
         } catch (Exception $e) {
     
-        die('Erreur :' . $e->getMessage());
+            die('Erreur :' . $e->getMessage());
     
         }
 
-        $req = $bdd->prepare('INSERT INTO jeux_video (nom, possesseur, console, prix, nbre_joueurs_max, commentaires)
-            VALUE(?, ?, ?, ?, ?, ?)');
+        //Reponse contient les données de la bdd
+        $reponse = $bdd->query('SELECT * FROM jeux_video ORDER BY ID DESC');
 
-        /*$req->execute(array(
-            $_POST['nom'],
-            $_POST['possesseur'],
-            $_POST['console'],
-            $_POST['prix'],
-            $_POST['nbre_joueurs_max'],
-            $_POST['commentaires']
-        ));
-
-        $req->closeCursor();*/
+        while ($donnees = $reponse->fetch()) {
 
     ?>
+
+        <p><strong>Jeu</strong> : 
+        <?php echo htmlspecialchars($donnees['nom']); ?><br />
+        Le possesseur de ce jeu est : 
+        <?php echo htmlspecialchars($donnees['possesseur']); ?>, et il le vend à <?php echo htmlspecialchars($donnees['prix']); ?> euros !<br />
+        Ce jeu fonctionne sur <?php echo htmlspecialchars($donnees['console']); ?> et on peut y jouer à <?php echo htmlspecialchars($donnees['nbre_joueurs_max']); ?> au maximum<br />
+        <?php echo htmlspecialchars($donnees['possesseur']); ?> a laissé ces commentaires sur <?php echo htmlspecialchars($donnees['nom']); ?> : <em><?php echo htmlspecialchars($donnees['commentaires']); ?></em>
+        </p>
+    <?php
+        }
+
+        $reponse->closeCursor(); // Termine le traitement de la requête
+
+    ?>    
     
 </body>
 </html>
