@@ -9,6 +9,12 @@
 
     <h1>Formulaire d'ajout de jeux vidéo</h1>
 
+    <img src="images/image.php" />
+
+    <h3>Soyez généreux !</h3>
+    
+    <img src="images/imageForme.php" />
+
     <form method="POST" action="jeux_video_post.php">
         <p>
             <label for="nom">Nom du jeu :
